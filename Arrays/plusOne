@@ -1,0 +1,12 @@
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+        lastIndex = len(digits)-1
+        carry = 1
+        while carry == 1 and lastIndex>-1:
+            digits[lastIndex] = (digits[lastIndex]+1)%10
+            carry = (digits[lastIndex]+1)/10
+            lastIndex-=1
+        if carry == 1:
+            digits.insert(0,1)
+        return digits
+        
