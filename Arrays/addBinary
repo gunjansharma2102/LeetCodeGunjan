@@ -1,0 +1,39 @@
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        lenFirst=len(a)-1
+        lenSecond=len(b)-1
+        listResult=""
+        carry=0
+        summ=0
+        
+        while lenFirst>=0 and lenSecond>=0:
+            total = int(a[lenFirst])+int(b[lenSecond])+carry
+            summ = total%2
+            carry = total//2
+            listResult=str(summ)+listResult
+            lenFirst-=1
+            lenSecond-=1
+            
+        while lenFirst>=0:
+            total = int(a[lenFirst])+carry
+            summ = total%2
+            carry = total//2
+            listResult=str(summ)+listResult
+            lenFirst-=1
+            
+        while lenSecond>=0:
+            total = int(b[lenSecond])+carry
+            summ = total%2
+            carry = total//2
+            listResult=str(summ)+listResult
+            lenSecond-=1
+        if carry ==1:
+            listResult="1"+listResult
+        
+        return listResult
+        
+            
+        
+            
+            
+       
