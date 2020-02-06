@@ -1,0 +1,22 @@
+class Solution:
+    def arrayPairSum(self, nums: List[int]) -> int:
+        freqList = [0]*20001
+        for x in nums:
+            freqList[10000+x]+=1
+        
+        sumArray=0
+        extra = False
+        
+        for e, f in enumerate(freqList):
+            if f:
+                if extra:
+                    f-=1
+                if f%2==0:
+                    sumArray+=(f//2)*(e-10000)
+                    extra=False
+                else:
+                    sumArray+=(f//2+1)*(e-10000)
+                    extra=True
+        return sumArray
+                
+        
