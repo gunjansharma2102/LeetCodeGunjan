@@ -1,0 +1,16 @@
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        def next_number(n):
+            sum=0
+            while n!=0:
+                sum+=(n%10)**2
+                n=n//10
+            print(sum)
+            return sum
+        
+        findSet=set()
+        while n!=1 and n not in findSet:
+            findSet.add(n)
+            n=next_number(n)
+        return n==1
+        
