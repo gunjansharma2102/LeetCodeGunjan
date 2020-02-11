@@ -1,0 +1,21 @@
+class Solution:
+    def isIsomorphic(self, s: str, t: str) -> bool:
+        hashMap1={}
+        if len(s)!=len(t):
+            return False
+        if s=="":
+            if t=="":
+                return True
+            return False
+        for i in range(len(s)):
+            if s[i] in hashMap1:
+                if hashMap1[s[i]]!=t[i]:
+                    return False
+            else:
+                if t[i] in hashMap1.values():
+                    return False
+                else:
+                    hashMap1[s[i]]=t[i]
+        return True
+        
+        
