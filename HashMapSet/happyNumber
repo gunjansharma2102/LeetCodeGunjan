@@ -5,7 +5,6 @@ class Solution:
             while n!=0:
                 sum+=(n%10)**2
                 n=n//10
-            print(sum)
             return sum
         
         findSet=set()
