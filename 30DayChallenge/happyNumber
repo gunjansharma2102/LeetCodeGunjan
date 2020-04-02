@@ -1,0 +1,25 @@
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        if n<=0:
+            return False
+        if n==1:
+            return True
+        hashSet=set()
+        while n not in hashSet:
+            hashSet.add(n)
+            nextNumber=0
+            while n!=0:
+                modulo=n%10
+                nextNumber=nextNumber+(modulo*modulo)
+                n=n//10
+            if nextNumber==1:
+                return True
+            n=nextNumber
+            
+        return False 
+            
+        
+        
+            
+        
+        
