@@ -1,0 +1,38 @@
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        spointer=0
+        fpointer=1
+        profit=0
+        pastprofit=0
+        finalprofit=0
+        buy=False
+        while fpointer<len(prices):
+            if buy==False:
+                if prices[fpointer]>prices[spointer]:
+                    profit=prices[fpointer]-prices[spointer]
+                    buy=True
+                    fpointer+=1
+                else:
+                    fpointer+=1
+                    spointer+=1
+            else:               
+                profit=prices[fpointer]-prices[spointer]
+                if profit>pastprofit:
+                    if fpointer==len(prices)-1:
+                        finalprofit+=profit
+                        buy=False
+                        fpointer+=1
+                else:
+                    finalprofit+=pastprofit
+                    buy=False
+                    profit=0
+                    spointer=fpointer
+                    fpointer+=1
+            if fpointer==len(prices) and buy==True:
+                        finalprofit+=profit
+                    
+            pastprofit=profit
+            profit=0
+            
+        return finalprofit 
+             
