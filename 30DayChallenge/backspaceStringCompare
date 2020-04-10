@@ -1,0 +1,48 @@
+class Solution:
+    def backspaceCompare(self, S: str, T: str) -> bool:
+        sLength=len(S)-1
+        tLength=len(T)-1
+        
+        swaps=0
+        swapt=0
+        
+        if sLength==-1 and tLength==-1:
+            return True
+        
+        
+        while sLength>=0 or tLength>=0:
+            while sLength>=0 and (S[sLength]=='#' or swaps>0):
+                if S[sLength]=='#':
+                    swaps+=1
+                else:
+                    swaps-=1
+                sLength-=1
+            
+            while tLength>=0 and (T[tLength]=='#' or swapt>0):
+                if T[tLength]=='#':
+                    swapt+=1
+                else:
+                    swapt-=1
+                tLength-=1
+                
+            
+            if sLength>=0 and tLength>=0 and S[sLength]!=T[tLength]:
+                return False
+            
+            if (sLength<0 and tLength>=0) or (sLength>=0 and tLength<0) :
+                return False
+                
+            
+            
+            sLength-=1
+            tLength-=1    
+
+        return True
+        
+            
+        
+        
+                
+        
+        
+        
