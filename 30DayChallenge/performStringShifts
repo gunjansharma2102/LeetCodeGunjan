@@ -1,0 +1,22 @@
+class Solution:
+    def stringShift(self, s: str, shift: List[List[int]]) -> str:
+        finalShift = 0
+        if len(s)<=0:
+            return s
+        for i in range(len(shift)):
+            if shift[i][0]==0:
+                finalShift-=shift[i][1]
+            if shift[i][0]==1:
+                finalShift+=shift[i][1]
+        if finalShift==0:
+            return s
+
+        while finalShift<0:
+            s=s[1:]+s[0]
+            finalShift+=1
+        while finalShift>0:
+            s=s[len(s)-1]+s[0:len(s)-1]
+            finalShift-=1
+        return s
+                
+            
