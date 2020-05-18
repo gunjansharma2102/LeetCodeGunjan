@@ -1,0 +1,10 @@
+class Solution(object):
+    def reorderLogFiles(self, logs):
+        digiList=[]
+        letterList=[]
+        for x in logs:
+            if x.split()[1].isalpha():letterList.append(x)
+            else:
+                digiList.append(x)
+                
+        return sorted(letterList, key = lambda x: x.split(" ",1)[1]+x.split(" ",1)[0])+digiList
