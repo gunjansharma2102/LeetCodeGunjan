@@ -1,0 +1,27 @@
+import collections
+class Solution:
+    def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
+        
+        map1={}
+        paragraph=paragraph.lower()
+        removeWords=[",",".","!","?",";","'"]
+        for x in removeWords:
+            paragraph=paragraph.replace(x," ")
+        list1=paragraph.split()
+        print(list1)
+        map1=collections.Counter(list1)
+        ans,maxF="",0
+        for x in map1 :
+            if map1[x]>maxF and x not in banned:
+                ans, maxF = x , map1[x]
+        return ans
+        
+            
+        
+        
+        
+        
+        
+            
+            
+        
