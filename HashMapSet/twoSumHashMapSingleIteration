@@ -3,7 +3,7 @@ class Solution:
         hashMap={}
         for i,x in enumerate(nums):
             complement=target-x
-            if complement in hashMap and hashMap[complement]!=i:
+            if complement in hashMap:
                 return [i, hashMap[complement]]
             hashMap[x]=i
             
