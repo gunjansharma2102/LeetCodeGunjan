@@ -3,5 +3,24 @@ class Solution(object):
         points.sort(key = lambda P: P[0]**2 + P[1]**2)
         return points[:K]
 
-//head based solution
+//heap based solution
+
+import heapq
+class Solution(object):
+    def kClosest(self, points, K):
+        heap=[]
+        ans=[]
+        for i in range(K):
+            heappush(heap, (-(points[i][0]*points[i][0]+points[i][1]*points[i][1]),points[i]))
+        for j in range(K, len(points)):
+            if heap[0][0]<-(points[j][0]*points[j][0]+points[j][1]*points[j][1]):
+                heapq.heappop(heap)
+                heapq.heappush(heap,(-(points[j][0]*points[j][0]+points[j][1]*points[j][1]),points[j]))
+        while heap!=[]:
+            ans.append(heapq.heappop(heap)[1])
+        return ans
+            
+        
+        
+            
 
