@@ -1,0 +1,36 @@
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        if s=="" or t=="":
+            return ""
+        i=0
+        j=0
+        hashMap={}
+        ans=[]
+        minValue=len(s)+1
+        for a in t:
+            if a in hashMap:
+                hashMap[a]+=1
+            else:
+                hashMap[a]=1
+        formed=0
+        required=len(hashMap)
+        while j<len(s) and i<len(s):
+            if s[j] in hashMap:
+                hashMap[s[j]]-=1
+                if hashMap[s[j]]==0:
+                    formed+=1
+            while formed==required:
+                if j-i+1<minValue:
+                    minValue=j-i+1
+                    ans=[i,j]
+                if s[i] in hashMap:
+                    hashMap[s[i]]+=1
+                    if hashMap[s[i]]>0:
+                        formed-=1
+                i+=1
+            j+=1
+        if ans==[]:
+            return ""
+        return s[ans[0]:ans[1]+1]
+                
+        
