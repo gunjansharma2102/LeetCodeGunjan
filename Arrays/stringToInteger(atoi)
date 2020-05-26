@@ -1,0 +1,40 @@
+import re
+class Solution:
+    def myAtoi(self, str: str) -> int:
+        if len(str)==0:
+            return 0
+        i=0
+        while i<len(str) and str[i]==" ":
+            i+=1
+            
+        str=str[i:]
+        if len(str)==0:
+            return 0
+        
+        if str[0]=="-":
+            sign=-1
+            str=str[1:]
+        elif str[0]=="+":
+            sign=1
+            str=str[1:]
+        else:
+            sign=1
+        
+        if len(str)==0:
+            return 0
+        if re.findall('[0-9]',str[0])==[]:
+            return 0
+        j=0
+        while j<len(str):
+            if re.findall('[0-9]',str[j])==[]:
+                break
+            j+=1
+        str=str[:j]
+        
+        returnValue=int(str)*sign
+        if returnValue<(-2**31):
+            return (-2**31)
+        elif returnValue>(2**31-1):
+            return (2**31-1)
+        else:
+            return returnValue
