@@ -1,0 +1,32 @@
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+    
+        
+        def twoSum(nums, i, target, returnDigit):
+            j=i+1
+            k=len(nums)-1
+
+            while j<k:
+                sumNumbers=nums[i]+nums[j]+nums[k]
+                if sumNumbers<target or (j>i+1 and nums[j]==nums[j-1]):
+                    j+=1
+                    if abs(returnDigit[0])>abs(target-sumNumbers):
+                        returnDigit[0]=target-sumNumbers
+                elif sumNumbers>target or (k<len(nums)-1 and nums[k]==nums[k+1]):
+                    k-=1
+                    if abs(returnDigit[0])>abs(target-sumNumbers):
+                        returnDigit[0]=target-sumNumbers
+                elif sumNumbers==target:
+                    returnDigit[0]= 0
+                    j+=1
+                    k-=1
+
+
+        nums.sort()
+
+        returnDigit=[sys.maxsize]
+        for i in range(len(nums)):
+            if i==0 or nums[i]!=nums[i-1]:
+                twoSum(nums, i, target, returnDigit)
+        return target-returnDigit[0]
+            
