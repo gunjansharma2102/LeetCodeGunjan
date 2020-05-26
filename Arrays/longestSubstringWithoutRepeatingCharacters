@@ -1,0 +1,15 @@
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        hashMap={}
+        i=0
+        j=0
+        result=0
+        while j<len(s):
+            if s[j] in hashMap:
+                i=max(hashMap[s[j]]+1,i)
+            result=max(result, j-i+1)
+            hashMap[s[j]]=j
+            j+=1
+        return result
+        
+        
