@@ -8,4 +8,21 @@ class Solution:
                 matrix[i][j],matrix[j][i]=matrix[j][i],matrix[i][j]
         for k in range(len(matrix)):
             matrix[k]=matrix[k][::-1]
+            
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        low=0
+        high=len(matrix)-1
+        while low<high:
+            length=high-low
+            for i in range(length):
+                matrix[low][low+i],matrix[low+i][high]=matrix[low+i][high],matrix[low][low+i]
+                matrix[low][low+i],matrix[high][high-i]=matrix[high][high-i],matrix[low][low+i]
+                matrix[low][low+i],matrix[high-i][low]=matrix[high-i][low],matrix[low][low+i]
+            low+=1
+            high-=1
+        return matrix
         
