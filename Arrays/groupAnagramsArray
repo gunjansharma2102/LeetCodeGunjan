@@ -1,0 +1,15 @@
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        hashMap={}
+        for x in strs:
+            y=[0]*26
+            for a in x:
+                y[ord(a)-ord('a')]+=1
+            y=tuple(y)
+            if y in hashMap:
+                hashMap[y].append(x)
+            else:
+                hashMap[y]=[x]
+        return hashMap.values()
+        
+        
