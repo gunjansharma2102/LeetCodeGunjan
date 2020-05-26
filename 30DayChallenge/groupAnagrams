@@ -1,25 +1,16 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        outputHashMap={}
-        outputList=[]
-        
-        for i in range(len(strs)):
-            listAlphabets="".join(sorted(strs[i]))
-            if listAlphabets in outputHashMap.keys():
-                outputHashMap[listAlphabets].append(strs[i])
-            else:
-                outputHashMap.update({listAlphabets:[strs[i]]})
-            
-        for value in outputHashMap.values():
-            outputList.append(value)
-        return outputList
-            
-            
-        
-        
-        
-                    
+        hashMap={}
+        for x in strs:
+            y=0
+            for a in x:
+                y+=10**ord(a)
                 
-            
+            if y in hashMap:
+                hashMap[y].append(x)
+            else:
+                hashMap[y]=[x]
+                
+        return hashMap.values()
         
         
