@@ -1,0 +1,25 @@
+class Solution:
+    def compareVersion(self, version1: str, version2: str) -> int:
+        def getNext(version, n, k):
+            if k>n-1:
+                return 0,n
+            k_next=k
+            while k_next<n and version[k_next]!=".":
+                k_next+=1
+            if k_next>=n:
+                return int(version[k:n]),n
+            return int(version[k:k_next]),k_next+1
+        l1=len(version1)
+        l2=len(version2)
+            
+        i=0
+        j=0
+        while i<max(l1,l2) and j<max(l1,l2):
+            a,i = getNext(version1, l1, i)
+            b,j = getNext(version2, l2, j)
+            if a>b:
+                return 1
+            elif a<b:
+                return -1
+        return 0
+        
