@@ -1,0 +1,19 @@
+class Solution:
+    def isValid(self, s: str) -> bool:
+        if len(s)%2!=0:
+            return False
+        stack=[]
+        hashMap={'(':')', '[':']','{':'}'}
+        for i,x in enumerate(s):
+            if x in ['(','[','{']:
+                stack.append(x)
+            else:
+                if stack==[] or hashMap[stack.pop()]!=x:
+                    return False
+        
+        if stack!=[]:
+            return False
+        return True
+        
+        
+        
