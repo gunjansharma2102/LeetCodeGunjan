@@ -1,0 +1,14 @@
+class Solution:
+    def firstUniqChar(self, s: str) -> int:
+        hashMap={}
+        
+        hashMap=collections.Counter(s)
+    
+        for i,x in enumerate(s):
+            if hashMap[x]==1:
+                return i
+        
+        return -1
+        
+                
+        
