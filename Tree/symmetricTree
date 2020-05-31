@@ -1,0 +1,55 @@
+#Recursive
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        def isMirror(node1, node2):
+            if node1==None and node2==None:
+                return True
+            if node1==None or node2==None:
+                return False
+            l=isMirror(node1.left,node2.right)
+            r=isMirror(node1.right,node2.left)
+            m=node1.val==node2.val
+            return (l and m and r) 
+                                     
+        return isMirror(root, root)
+                
+                
+            
+        
+#Iterative
+
+from collections import deque
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        if root==None:
+            return True
+        q=deque([root, root])
+        while q:
+            l=q.popleft()
+            r=q.popleft()
+            if l==None and r==None:
+                continue
+            if l==None or r==None:
+                return False
+            if l.val!=r.val:
+                return False
+            q.append(l.left)
+            q.append(r.right)
+            q.append(l.right)
+            q.append(r.left)
+        return True
+        
+        
+        
