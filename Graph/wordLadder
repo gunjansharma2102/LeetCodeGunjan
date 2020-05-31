@@ -1,0 +1,43 @@
+from collections import deque
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+
+        if endWord not in wordList:
+            return 0
+        if beginWord==None or endWord==None or wordList==None:
+            return 0
+        
+        l=len(beginWord)
+        
+        if l==0:
+            return 0
+        
+        hashMap={}
+        
+        
+        for word in wordList:
+            for k in range(l):
+                temp=word[:k]+'*'+word[k+1:]
+                if temp in hashMap:
+                    hashMap[temp].append(word)
+                else:
+                    hashMap[temp]=[word]
+        
+        q=deque([(beginWord, 1)])
+        visited=set()
+        visited.add(beginWord)
+        
+        while q:
+            node, depth=q.popleft()
+            for m in range(l):
+                temp=node[:m]+'*'+node[m+1:]
+                if temp in hashMap:
+                        for element in hashMap[temp]:
+                            if element==endWord:
+                                return depth+1
+                            if element not in visited:
+                                visited.add(element)
+                                q.append((element, depth+1))
+                        hashMap[temp]=[]
+            
+        return 0
