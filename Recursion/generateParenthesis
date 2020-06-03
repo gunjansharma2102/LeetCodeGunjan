@@ -1,0 +1,15 @@
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        ans=[]
+        
+        def recursion(S='', left=0, right=0):
+            if len(S)==2*n:
+                ans.append(S)
+            if left<n:
+                recursion(S+'(', left+1, right)
+            if right<left:
+                recursion(S+')', left, right+1)
+        
+        recursion()
+        
+        return ans
