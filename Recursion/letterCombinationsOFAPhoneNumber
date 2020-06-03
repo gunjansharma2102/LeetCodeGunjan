@@ -1,0 +1,28 @@
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        def makeWords(combination, nextDigits):
+            if len(nextDigits)==0:
+                output.append(combination)
+            else:
+                for element in hashMap[nextDigits[0]]:
+                    makeWords(combination+element, nextDigits[1:])
+                
+            
+            
+        if digits=="":
+            return []
+        
+        hashMap={"2":["a","b","c"], 
+                 "3":["d","e","f"], 
+                 "4":["g", "h", "i"], 
+                 "5":["j", "k", "l"], 
+                 "6": ["m", "n", "o"], 
+                 "7":["p", "q", "r", "s"], 
+                 "8":["t", "u", "v"], 
+                 "9":["w", "x", "y", "z"]}
+        
+        output=[]
+        makeWords("", digits)
+        return output
+            
+        
