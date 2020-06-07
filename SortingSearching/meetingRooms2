@@ -1,0 +1,23 @@
+import heapq
+class Solution:
+    def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+        intervals.sort(key = lambda x: x[0])
+        if len(intervals)<=1:
+            return len(intervals)
+        result=1
+        heap=[]
+        heapq.heappush(heap,(intervals[0][1]))
+        final=intervals[0][1]
+        for i in range(1,len(intervals)):
+            if intervals[i][0]<final:
+                result+=1
+            else:
+                heapq.heappop(heap)
+            heapq.heappush(heap,intervals[i][1])
+            final=heap[0]
+
+        return result
+        
+                
+            
+        
