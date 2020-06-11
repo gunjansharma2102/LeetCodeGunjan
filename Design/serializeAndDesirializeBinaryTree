@@ -1,0 +1,71 @@
+from collections import deque
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Codec:
+
+    def serialize(self, root):
+        """Encodes a tree to a single string.
+        
+        :type root: TreeNode
+        :rtype: str
+        """
+        
+        ans=""
+        if root==None:
+            return "null"
+        
+        q=deque([root])
+        
+        while q:
+            size=len(q)
+            for _ in range(size):
+                
+                element=q.popleft()
+                if element==None:
+                    ans+="null,"
+                else:
+                    ans+=str(element.val)+","
+                    q.append(element.left)
+                    q.append(element.right)
+        return ans
+        
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+        
+        :type data: str
+        :rtype: TreeNode
+        """
+        output=data.split(",")
+        
+        if output[0]=='null' or output[0]=='':
+            return None
+        
+        while output[-1]=='null' or output[-1]=='':
+            output=output[0:-1]
+        
+        root=None
+        
+        m=len(output)-1
+        
+        def d(node, output, index):
+            if index>m:
+                return
+            node=TreeNode(output[index])
+            node.left=d(node.left, output, (2*index+1))
+            node.right=d(node.right, output, (2*index+2))
+            
+            return node
+
+        
+        return d(root, output, 0)
+        
+        
+
+# Your Codec object will be instantiated and called as such:
+# codec = Codec()
+# codec.deserialize(codec.serialize(root))
