@@ -1,0 +1,14 @@
+from collections import defaultdict
+import heapq
+
+class Solution:
+    def highFive(self, items: List[List[int]]) -> List[List[int]]:
+        hashMap=defaultdict(list)
+        for item in items:
+            heapq.heappush(hashMap[item[0]], item[1])
+        
+        ans=[]
+        for key,value in hashMap.items():
+            avg=sum(heapq.nlargest(5, value))//5
+            ans.append([key, avg])
+        return ans
