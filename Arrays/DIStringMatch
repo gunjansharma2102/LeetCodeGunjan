@@ -1,0 +1,20 @@
+class Solution:
+    def diStringMatch(self, S: str) -> List[int]:
+        n=len(S)
+        ans=[]
+        j=0
+        for i in range(n):
+            if S[i]=="I":
+                ans.append(j)
+                j+=1
+            elif S[i]=="D":
+                ans.append(n)
+                n-=1
+        if S[-1]=="I":
+            ans.append(j)
+        if S[-1]=="D":
+            ans.append(n)
+        return ans
+                
+            
+        
