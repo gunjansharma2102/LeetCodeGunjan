@@ -1,0 +1,91 @@
+class Solution:
+    def gameOfLife(self, board: List[List[int]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        def check(board, index1, index2):
+            
+            if index1>0:
+                l1=board[index1-1][index2]
+                if l1==-1:
+                    l1=1
+                if l1==2:
+                    l1=0
+            else:
+                l1=0
+            if index2>0:
+                l2=board[index1][index2-1]
+                if l2==-1:
+                    l2=1
+                if l2==2:
+                    l2=0
+            else:
+                l2=0
+            if index1<len(board)-1:
+                l3=board[index1+1][index2]
+                if l3==-1:
+                    l3=1
+                if l3==2:
+                    l3=0
+            else:
+                l3=0
+            if index2<len(board[0])-1:
+                l4=board[index1][index2+1]
+                if l4==-1:
+                    l4=1
+                if l4==2:
+                    l4=0
+            else:
+                l4=0
+            if index1>0 and index2>0:
+                l5=board[index1-1][index2-1]
+                if l5==-1:
+                    l5=1
+                if l5==2:
+                    l5=0
+            else:
+                l5=0
+            if index1>0 and index2<len(board[0])-1:
+                l6=board[index1-1][index2+1]
+                if l6==-1:
+                    l6=1
+                if l6==2:
+                    l6=0
+            else:
+                l6=0
+            if index1<len(board)-1 and index2>0:
+                l7=board[index1+1][index2-1]
+                if l7==-1:
+                    l7=1
+                if l7==2:
+                    l7=0
+            else:
+                l7=0
+            if index1<len(board)-1 and index2<len(board[0])-1:
+                l8=board[index1+1][index2+1]
+                if l8==-1:
+                    l8=1
+                if l8==2:
+                    l8=0
+            else:
+                l8=0
+                
+            sumOfNeighbours=l1+l2+l3+l4+l5+l6+l7+l8
+            
+            if board[index1][index2]==1 and (sumOfNeighbours<2 or sumOfNeighbours>3):
+                board[index1][index2]=-1
+            if board[index1][index2]==0 and sumOfNeighbours==3:
+                board[index1][index2]=2
+                
+        
+        for i in range(len(board)):
+            for j in range(len(board[i])):
+                check(board, i, j)
+                
+        for k in range(len(board)):
+            for l in range(len(board[k])):
+                if board[k][l]==-1:
+                    board[k][l]=0
+                if board[k][l]==2:
+                    board[k][l]=1
+                
