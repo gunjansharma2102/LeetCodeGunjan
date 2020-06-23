@@ -1,0 +1,42 @@
+
+class Solution:
+    def fractionToDecimal(self, numerator: int, denominator: int) -> str:
+        
+        if numerator==0:
+            return "0"
+        
+        def positiveDecimal(numerator, denominator):
+            res=""
+            div=numerator//denominator
+            mod=numerator%denominator
+            
+            if mod==0:
+                return str(div)
+            res+="."
+            
+            hashMap={}
+            temp=1
+            while mod!=0:
+                mod=(mod%denominator)*10
+                if mod in hashMap:
+                    index=hashMap[mod]
+                    res=res[:index]+"("+res[index:]+")"
+                    break
+                hashMap[mod]=temp
+                
+                if mod==0:
+                    break
+                res+=str(mod//denominator)
+                
+                temp+=1
+                
+            
+            return str(div)+res
+        
+        ans=positiveDecimal(abs(numerator), abs(denominator))
+        
+        if numerator*denominator>=0:
+            return ans
+        else:
+            return "-"+ans
+        
