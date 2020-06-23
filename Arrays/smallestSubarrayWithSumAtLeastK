@@ -1,0 +1,29 @@
+from collections import deque
+class Solution:
+    def shortestSubarray(self, A: List[int], K: int) -> int:
+        n=len(A)
+        ans=n+1
+        P=[0]
+        temp=0
+        for a in A:
+            temp+=a
+            P.append(temp)
+            
+        q=deque()
+
+        for i,p in enumerate(P):
+            
+            while q and p-P[q[0]]>=K:
+                ans=min(ans, i-q[0])
+                q.popleft()
+            
+            while q and p-P[q[-1]]<=0:
+                q.pop()
+            
+            q.append(i)
+        
+        if ans==n+1:
+            return -1
+        
+        return ans
+        
