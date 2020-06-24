@@ -1,0 +1,26 @@
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        l1=len(grid)
+        if l1==0:
+            return 0
+        l2=len(grid[0])
+        
+        hashMap={}
+        hashMap[(0,0)]=grid[0][0]
+        
+        for i in range(l1):
+            for j in range(l2):
+                if i==0:
+                    val1=float('inf')
+                else:
+                    val1=hashMap[(i-1,j)]
+                if j==0:
+                    val2=float('inf')
+                else:
+                    val2=hashMap[i, j-1]
+                if (i,j) not in hashMap:
+                    hashMap[(i, j)]=grid[i][j]+min(val1,val2)
+        
+        return hashMap[(l1-1, l2-1)]
+        
+        
