@@ -1,0 +1,37 @@
+# Brute Force
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        ans=0
+        P=[0]
+        for i,num in enumerate(nums):
+            P.append(num+P[i])
+        
+        for j in range(len(P)):
+            for l in range(len(P)-1, j, -1):
+                
+                if P[l]-P[j]==k:
+                    ans+=1
+                    
+        return ans
+        
+from collections import defaultdict
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        ans=0
+        s=0
+        hashMap=defaultdict(int)
+        hashMap[0]=1
+        
+        for i,num in enumerate(nums):
+            s+=num
+            if s-k in hashMap:
+                ans+=hashMap[s-k]
+            hashMap[s]+=1
+   
+        return ans
+        
+        
+        
+                
+        
+        
