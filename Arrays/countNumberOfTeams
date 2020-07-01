@@ -1,3 +1,28 @@
+#O(N2)
+class Solution:
+    def numTeams(self, rating: List[int]) -> int:
+        ans=0
+        n=len(rating)
+        for j in range(n):
+            leftSmall=0
+            leftLarge=0
+            rightSmall=0
+            rightLarge=0
+            for i in range(j):
+                if rating[i]<rating[j]:
+                    leftSmall+=1
+                elif rating[i]>rating[j]:
+                    leftLarge+=1
+            for k in range(j+1,n):
+                if rating[k]<rating[j]:
+                    rightSmall+=1
+                elif rating[k]>rating[j]:
+                    rightLarge+=1
+            ans+=leftSmall*rightLarge+leftLarge*rightSmall
+        return ans
+        
+
+
 #Brute Force
 
 class Solution:
