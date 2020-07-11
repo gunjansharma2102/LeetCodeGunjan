@@ -1,0 +1,17 @@
+class Solution:
+    def generate(self, numRows: int) -> List[List[int]]:
+        if numRows==0:
+            return []
+        pascalTriangle=[]
+        for i in range(numRows):
+            temp=[]
+            for j in range(i+1):
+                if i>1 and j>0 and j<i:
+                    temp.append(pascalTriangle[i-1][j-1]+pascalTriangle[i-1][j])
+                else:
+                    temp.append(1)
+            pascalTriangle.append(temp)
+            
+        return pascalTriangle
+        
+                
