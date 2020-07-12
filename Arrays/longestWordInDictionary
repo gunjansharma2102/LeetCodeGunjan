@@ -1,0 +1,11 @@
+class Solution:
+    def longestWord(self, words: List[str]) -> str:
+        words.sort()
+        returnString=""
+        hashSet=set()
+        for word in words:
+            if len(word)==1 or word[:len(word)-1] in hashSet:
+                if len(word)>len(returnString):
+                    returnString=word
+                hashSet.add(word)
+        return returnString
