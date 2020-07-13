@@ -1,0 +1,44 @@
+class Solution:
+    def oddEvenJumps(self, A: List[int]) -> int:
+        
+        #This function returns a list of the next possible jump which will be of greater index  #than the previous jump. A Monotonic stack which is decresing will give us the nest larger #number fo reach number. In this case, it will give us the next larger index for each index. #Because the indexes are already sorted in increasing order of corresponding values for the next #odd jump and decreasing order of corresponding values for next even jumps, the next larger #index in the returned list will be the higher/lower value based on the input to the function, #i.e. increasing ordered values/increasing ordered values
+        
+        def makeMonotonicStack(listOfIndices):
+            stack=[]
+            returnAnswer=[None]*len(listOfIndices)
+            for index in listOfIndices:
+                while stack and stack[-1]<index:
+                    returnAnswer[stack.pop()]=index
+                stack.append(index)
+            return returnAnswer
+            
+        
+        #sort the indexes based on the corresponding values in ascending order
+        indexesWithIncreasingValues=sorted(range(len(A)),key=lambda x: A[x])
+        #sort the indexes based on the corresponding values in descending order
+        indexesWithDecreasingValues=sorted(range(len(A)),key=lambda x: A[x],reverse=True)
+        #find the indices for next odd jump using the monotonic stack function
+        nextOddJump=makeMonotonicStack(indexesWithIncreasingValues)
+        #find the indices for next even jump using the monotonic stack function
+        nextEvenJump=makeMonotonicStack(indexesWithDecreasingValues)
+        
+        #create two lists which store the odd and even jump booleans
+        odd=[False]*len(A)
+        Even=[False]*len(A)
+        
+        odd[-1]=True
+        Even[-1]=True
+        
+        for i in range(len(A)-2,-1,-1):
+            if nextOddJump[i]:
+                odd[i]=Even[nextOddJump[i]]
+            if nextEvenJump[i]:
+                Even[i]=odd[nextEvenJump[i]]
+        return sum(odd)
+        
+        
+        
+        
+        
+        
+        
