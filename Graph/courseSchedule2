@@ -1,0 +1,24 @@
+class Solution:
+    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        ans=[]
+        indegree=[0]*numCourses
+        for prerequisite in prerequisites:
+            indegree[prerequisite[0]]+=1
+        
+        stack=[]
+        for i in range(numCourses):
+            if indegree[i]==0:
+                stack.append(i)
+        
+        while stack:
+            element=stack.pop()
+            ans.append(element)
+            for prerequisite in prerequisites:
+                if element==prerequisite[1]:
+                    indegree[prerequisite[0]]-=1
+                    if indegree[prerequisite[0]]==0:
+                        stack.append(prerequisite[0])
+        
+        return ans if len(ans)==numCourses else []
+                
+        
