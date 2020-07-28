@@ -1,0 +1,31 @@
+class Solution:
+    def splitArray(self, nums: List[int], m: int) -> int:
+        
+        def findSubs(nums, mid):
+            number=1
+            tempSum=0
+            for num in nums:
+                if tempSum+num>mid:
+                    number+=1
+                    tempSum=num
+                else:
+                    tempSum+=num
+            return number
+        
+        n=len(nums)
+        sumOfElements=0
+        maximumElement=0
+        for num in nums:
+            maximumElement=max(maximumElement, num)
+            sumOfElements+=num
+        low=maximumElement
+        high=sumOfElements
+        while low<high:
+            mid=low+(high-low)//2
+            numberOfSubs=findSubs(nums, mid)
+            if numberOfSubs>m:
+                low=mid+1
+            else:
+                high=mid
+        return low
+        
