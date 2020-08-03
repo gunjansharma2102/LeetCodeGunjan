@@ -1,0 +1,101 @@
+class LFUCacheNode:
+    def __init__(self, key=None, val=None):
+        self.key=key
+        self.val=val
+        self.freq=1
+        self.prev=None
+        self.next=None
+
+class LFUCacheList:
+    
+    def __init__(self):
+        self.l=0
+        
+        self.head=LFUCacheNode()
+        self.tail=LFUCacheNode()
+        self.head.next=self.tail
+        self.tail.prev=self.head
+        
+    def addToHead(self, node):
+        n=self.head.next
+        self.head.next=node
+        node.prev=self.head
+        node.next=n
+        n.prev=node
+        self.l+=1
+        
+    def removeNode(self, node):
+        n=node.next
+        p=node.prev
+        n.prev=p
+        p.next=n
+        self.l-=1
+    
+    def removeTail(self):
+        node=self.tail.prev
+        self.removeNode(node)
+        return node.key
+        
+class LFUCache:
+
+    def __init__(self, capacity: int):
+        self.hashMap={}
+        self.freqMap={}
+        self.capacity=capacity
+        self.size=0
+        self.maxFreq=0
+        
+
+    def get(self, key: int) -> int:
+        node=self.hashMap.get(key)
+        if not node:
+            return -1
+        prevList=self.freqMap.get(node.freq)
+        prevList.removeNode(node)
+        node.freq+=1
+        self.maxFreq=max(self.maxFreq, node.freq)
+        currList=self.freqMap.get(node.freq)
+        if not currList:
+            currList=LFUCacheList()
+        currList.addToHead(node)
+        self.freqMap[node.freq]=currList
+        return node.val
+        
+        
+
+    def put(self, key: int, value: int) -> None:
+        
+        if self.capacity==0:
+            return
+        node=self.hashMap.get(key)
+        if node:
+            node.val=value
+            self.get(key)
+            return
+        self.size+=1
+        if self.size>self.capacity:
+            for i in range(1, self.maxFreq+1):
+                freqList=self.freqMap.get(i)
+                if freqList and freqList.l>0:
+                    k=freqList.removeTail()
+                    del self.hashMap[k]
+                    break
+            self.size-=1
+        newNode=LFUCacheNode(key, value)
+        currList=self.freqMap.get(1)
+        if not currList:
+            currList=LFUCacheList()
+        currList.addToHead(newNode)
+        self.maxFreq=max(self.maxFreq, 1)
+        self.hashMap[key]=newNode
+        self.freqMap[1]=currList
+        
+        
+            
+        
+
+
+# Your LFUCache object will be instantiated and called as such:
+# obj = LFUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
