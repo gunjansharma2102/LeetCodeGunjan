@@ -1,0 +1,21 @@
+from collections import defaultdict
+class Solution:
+    def minAreaRect(self, points: List[List[int]]) -> int:
+        hashMap=defaultdict(list)
+        for point in points:
+            hashMap[point[0]].append(point[1])
+        lastx={}
+        ans=float("inf")
+        for x in sorted(hashMap):
+            column=hashMap[x]
+            column.sort()
+            for i in range(len(column)):
+                for j in range(i+1, len(column)):
+                    y1=column[i]
+                    y2=column[j]
+                    if (y1,y2) in lastx:
+                        ans=min(ans,abs(y2-y1)*abs(x-lastx[(y1,y2)]))
+                    lastx[(y1,y2)]=x
+        return ans if ans<float("inf") else 0
+            
+        
