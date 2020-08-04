@@ -1,0 +1,22 @@
+class MyCalendarTwo:
+
+    def __init__(self):
+        self.intervals=[]
+        self.doubleIntervals=[]
+        
+
+    def book(self, start: int, end: int) -> bool:
+        
+        for start1, end1 in self.doubleIntervals:
+            if start<end1 and end>start1:
+                return False
+        for start2, end2 in self.intervals:
+            if start<end2 and end>start2:
+                self.doubleIntervals.append([max(start, start2), min(end, end2)])
+        self.intervals.append([start, end])
+        return True
+
+
+# Your MyCalendarTwo object will be instantiated and called as such:
+# obj = MyCalendarTwo()
+# param_1 = obj.book(start,end)
