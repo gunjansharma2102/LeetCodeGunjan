@@ -1,0 +1,77 @@
+class TrieNode:
+    def __init__(self):
+        self.neighbours={}
+        self.count=0
+        
+class AutocompleteSystem:
+
+    def __init__(self, sentences: List[str], times: List[int]):
+        self.root=TrieNode()
+        self.characters=""
+        for i in range(len(sentences)):
+            self.addToTrie(sentences[i], times[i])
+    
+    def addToTrie(self, word, time):
+        node=self.root
+        for char in word:
+            if char not in node.neighbours:
+                node.neighbours[char]=TrieNode()
+            node=node.neighbours[char]
+        node.count=time
+        
+    def addNewToTrie(self, word):
+        node=self.root
+        for char in word:
+            if char not in node.neighbours:
+                node.neighbours[char]=TrieNode()
+            node=node.neighbours[char]
+        node.count+=1
+        
+    def getWithPrefix(self, prefix):
+        node=self.root
+        for char in prefix:
+            if char in node.neighbours:
+                node=node.neighbours[char]
+            else:
+                return []
+        wordList=self.getAllWords(node, prefix)
+        if node.count>0:
+            wordList.append((prefix, node.count))
+        wordList.sort(key=lambda x: (-x[1], x[0]))
+        returnWords=[]
+        if len(wordList)>3:
+            wordList=wordList[:3]
+        for word,count in wordList:
+            returnWords.append(word)
+        return returnWords
+            
+    
+    def getAllWords(self, node, prefix):
+        words=[]
+        for key in node.neighbours.keys():
+            self.findWord(prefix+key, node.neighbours[key], words)
+        return words
+            
+    def findWord(self,string, node, words):
+        if node.count>0:
+            words.append((string, node.count))
+            
+        for key in node.neighbours.keys():
+            self.findWord(string+key, node.neighbours[key], words)
+            
+        
+        
+    def input(self, c: str) -> List[str]:
+        if c=='#':
+            self.addNewToTrie(self.characters)
+            self.characters=""
+        else:
+            self.characters+=c
+            return self.getWithPrefix(self.characters)
+        
+
+
+# Your AutocompleteSystem object will be instantiated and called as such:
+# obj = AutocompleteSystem(sentences, times)
+# param_1 = obj.input(c)
+
