@@ -1,0 +1,67 @@
+class Solution:
+    def countSmaller(self, nums: List[int]) -> List[int]:
+        
+        items=[None]*len(nums)
+        
+        for i in range(len(nums)):
+            items[i]=[nums[i], i, 0]
+            
+        def merge(items, leftStart, leftEnd, rightStart, rightEnd):
+            rightCounter=0
+            
+            left=leftStart
+            right=rightStart
+            
+            temp=[0]*(rightEnd-leftStart+1)
+            
+            ptr=0
+            
+            while leftStart<=leftEnd and rightStart<=rightEnd:
+                
+                if items[leftStart][0]<=items[rightStart][0]:
+                    items[leftStart][2]+=rightCounter
+                    temp[ptr]=items[leftStart]
+                    ptr+=1
+                    leftStart+=1
+                else:
+                    temp[ptr]=items[rightStart]
+                    rightCounter+=1
+                    ptr+=1
+                    rightStart+=1
+                    
+            while leftStart<=leftEnd:
+                items[leftStart][2]+=rightCounter
+                temp[ptr]=items[leftStart]
+                ptr+=1
+                leftStart+=1
+                
+            while rightStart<=rightEnd:
+                temp[ptr]=items[rightStart]
+                ptr+=1
+                rightStart+=1
+            
+            ptr=0
+            
+            for i in range(left, rightEnd+1):
+                items[i]=temp[ptr]
+                ptr+=1
+        
+        def mergeSort(items, start, end):
+            if end<=start:
+                return
+            
+            mid=start+(end-start)//2
+            
+            mergeSort(items, start, mid)
+            mergeSort(items, mid+1, end)
+            merge(items, start, mid, mid+1, end)
+            
+        mergeSort(items, 0, len(items)-1)
+        
+        count=[0]*(len(nums))
+        
+        for i in range(len(items)):
+            count[items[i][1]]=items[i][2]
+        
+        return count
+        
