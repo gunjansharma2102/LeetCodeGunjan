@@ -1,0 +1,25 @@
+#With For loop
+
+class Solution:
+    def findStrobogrammatic(self, n: int) -> List[str]:
+        
+        pairsMap={"0":"0", "1":"1", "6":"9", "8":"8", "9":"6"}        
+        
+        if n%2==0:
+            innerNumbers=[""]
+        else:
+            innerNumbers=["0","1","8"]
+        
+        layers=n//2
+        
+        for l in range(layers):
+            newInnerNumbers=[]
+            for innerNumber in innerNumbers:
+                for key,value in pairsMap.items():
+                    if l==layers-1 and key=="0":
+                        continue
+                    newInnerNumber=key+innerNumber+value
+                    newInnerNumbers.append(newInnerNumber)
+            innerNumbers=newInnerNumbers
+        return innerNumbers
+        
