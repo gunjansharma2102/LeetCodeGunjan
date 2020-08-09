@@ -1,0 +1,61 @@
+class TrieNode:
+    def __init__(self):
+        self.neighbours={}
+        self.isWord=False
+        
+class Trie:
+    def __init__(self):
+        self.root=TrieNode()
+        
+    def addWord(self, word):
+        node=self.root
+        for ch in word:
+            if ch not in node.neighbours:
+                node.neighbours[ch]=TrieNode()
+            node=node.neighbours[ch]
+        node.isWord=True
+        
+    def getWordsWithPrefix(self, prefix):
+        node=self.root
+        for ch in prefix:
+            if ch not in node.neighbours:
+                return []
+            node=node.neighbours[ch]
+        words=[]
+        self.findWordsWithNode(node, words, prefix)
+        return words
+    
+    def findWordsWithNode(self, node, words, string):
+        if node.isWord==True:
+            words.append(string)
+        for ch in node.neighbours:
+            self.findWordsWithNode(node.neighbours[ch], words, string+ch)
+    
+class Solution:
+    def wordSquares(self, words: List[str]) -> List[List[str]]:
+        
+        n=len(words[0])
+        
+        trie=Trie()
+        for word in words:
+            trie.addWord(word)
+        output=[]
+        
+        def findWordSquare(words, output, i, trie, n):
+            if n==len(words):
+                output.append(words)
+            if i==n:
+                return
+            prefix=""
+            for word in words:
+                prefix+=word[i]
+            listOfWords=trie.getWordsWithPrefix(prefix)
+            for word1 in listOfWords:
+                findWordSquare(words+[word1], output, i+1, trie, n)
+            
+            
+        
+        for word in words:
+            findWordSquare([word], output, 1, trie, n)
+        
+        return output
