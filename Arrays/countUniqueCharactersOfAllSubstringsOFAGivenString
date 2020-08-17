@@ -1,0 +1,18 @@
+class Solution:
+    def uniqueLetterString(self, s: str) -> int:
+        
+        index={c: [-1,-1] for c in string.ascii_uppercase}
+        
+        res=0
+        
+        for i,c in enumerate(s):
+            j,k=index[c]
+            res+=(k-j)*(i-k)
+            index[c]=[k,i]
+            
+        for c in index:
+            i,j=index[c]
+            res+=(len(s)-j)*(j-i)
+        
+        return res
+        
