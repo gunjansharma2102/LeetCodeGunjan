@@ -1,0 +1,29 @@
+class Solution:
+    def decodeString(self, s: str) -> str:
+        
+        if len(s)<=1:
+            return s
+        
+        stack=[]
+        currentString=""
+        currentCount=0
+        prevString=""
+        
+        for char in s:
+            if char.isdigit():
+                currentCount=currentCount*10+int(char)
+            elif char=="[":
+                stack.append([currentString, currentCount])
+                currentString=""
+                currentCount=0
+            elif char=="]":
+                prevString, prevCount = stack.pop()
+                currentString=prevString+(currentString)*prevCount
+                currentCount=0
+            else:
+                currentString+=char
+                
+        return currentString
+                
+        
+        
