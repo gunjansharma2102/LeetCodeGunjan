@@ -1,0 +1,61 @@
+from collections import defaultdict,deque
+
+class Solution:
+    def alienOrder(self, words: List[str]) -> str:
+        
+        def findOrder(word1, word2, listOrder):
+            i=0
+            j=0
+            
+            if len(word1)>len(word2) and word1.startswith(word2):
+                return False
+            
+            while i<len(word1) and j<len(word2) and word1[i]==word2[j]:
+                i+=1
+                j+=1
+            if i<len(word1) and j<len(word2):
+                listOrder.append((word1[i], word2[j]))
+                
+            return True
+        
+        listOrder=[]
+        
+        for i in range(len(words)):
+            for j in range(i+1, len(words)):
+                x=findOrder(words[i], words[j], listOrder)
+                if not x:
+                    return ""
+                
+        indegree=defaultdict(int)
+        
+        for word in words:
+            for char in word:
+                indegree[char]=0
+        
+        for order in listOrder:
+            indegree[order[1]]+=1
+        
+        q=deque([])
+        
+        output=""
+        
+        for key,value in indegree.items():
+            if value==0:
+                q.append(key)
+                
+        while q:
+            element=q.pop()
+            output+=element
+            for order in listOrder:
+                if order[0]==element:
+                    indegree[order[1]]-=1
+                    if indegree[order[1]]==0:
+                        q.append(order[1])
+                        
+        
+        return output if len(indegree)==len(output) else ""
+            
+            
+                
+            
+            
