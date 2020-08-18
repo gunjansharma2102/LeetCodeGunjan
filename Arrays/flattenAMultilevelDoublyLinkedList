@@ -1,0 +1,35 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val, prev, next, child):
+        self.val = val
+        self.prev = prev
+        self.next = next
+        self.child = child
+"""
+
+class Solution:
+    def flatten(self, head: 'Node') -> 'Node':
+        if head==None:
+            return None
+        
+        temp1=head
+        
+        stack=[]
+        
+        while temp1:
+            if temp1.child:
+                if temp1.next:
+                    stack.append(temp1.next)
+                temp1.next=temp1.child
+                temp1.next.prev=temp1
+                temp1.child=None
+            else:
+                if not temp1.next and stack:
+                    temp1.next=stack.pop()
+                    temp1.next.prev=temp1
+            temp1=temp1.next
+                    
+        
+        return head
+        
