@@ -1,0 +1,45 @@
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        
+        if len(matrix)==0:
+            return []
+        
+        upRowBoundary=leftColumnBoundary=0
+        downRowBoundary=len(matrix)-1
+        rightColumnBoundary=len(matrix[0])-1
+        
+        movement="R"
+        
+        output=[]
+        
+        row=col=0
+        
+        while upRowBoundary<=downRowBoundary and leftColumnBoundary<=rightColumnBoundary:
+            
+            if movement=="R":
+                for i in range(leftColumnBoundary, rightColumnBoundary+1):
+                    output.append(matrix[row][i])
+                col=i
+                upRowBoundary+=1
+                movement="D"
+            elif movement=="D":
+                for i in range(upRowBoundary, downRowBoundary+1):
+                    output.append(matrix[i][col])
+                row=i
+                rightColumnBoundary-=1
+                movement="L"
+            elif movement=="L":
+                for i in range(rightColumnBoundary, leftColumnBoundary-1,-1):
+                    output.append(matrix[row][i])
+                col=i
+                downRowBoundary-=1
+                movement="U"
+            elif movement=="U":
+                for i in range(downRowBoundary, upRowBoundary-1, -1):
+                    output.append(matrix[i][col])
+                row=i
+                leftColumnBoundary+=1
+                movement="R"
+                
+        return output
+        
