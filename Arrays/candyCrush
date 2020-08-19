@@ -1,0 +1,32 @@
+class Solution:
+    def candyCrush(self, board: List[List[int]]) -> List[List[int]]:
+        R,C=len(board), len(board[0])
+        
+        flag=False
+        
+        for row in range(R):
+            for col in range(C-2):
+                if abs(board[row][col])==abs(board[row][col+1])==abs(board[row][col+2])==abs(board[row][col])!=0:
+                    flag=True
+                    board[row][col]=board[row][col+1]=board[row][col+2]=-abs(board[row][col])
+                    
+        for row in range(R-2):
+            for col in range(C):
+                if abs(board[row][col])==abs(board[row+1][col])==abs(board[row+2][col])==abs(board[row][col])!=0:
+                    flag=True
+                    board[row][col]=board[row+1][col]=board[row+2][col]=-abs(board[row][col])
+                    
+        for col in range(C):
+            write=R-1
+            for row in range(R-1, -1, -1):
+                if board[row][col]>0:
+                    board[write][col]=board[row][col]
+                    write-=1
+            
+            for d in range(write, -1, -1):
+                board[d][col]=0
+                    
+        return self.candyCrush(board) if flag else board
+                    
+        
+        
