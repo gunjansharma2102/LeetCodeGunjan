@@ -1,0 +1,17 @@
+from collections import Counter
+import heapq
+class Solution:
+    def frequencySort(self, s: str) -> str:
+        hashMap=Counter(s)
+        heap=[]
+        ans=""
+        for key,value in hashMap.items():
+            heapq.heappush(heap, (-value, key))
+        
+        while heap:
+            f,ch=heapq.heappop(heap)
+            ans+=(ch)*(-f)
+        
+        return ans
+            
+        
