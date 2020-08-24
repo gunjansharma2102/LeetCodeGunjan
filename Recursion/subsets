@@ -1,0 +1,14 @@
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        
+        def findSubsets(output, index, nums, current):
+            output.append(current[::])
+            for i in range(index, len(nums)):
+                current.append(nums[i])
+                findSubsets(output, i+1, nums, current)
+                current.pop()
+        
+        output=[]
+        findSubsets(output, 0, nums, [])
+        return output
+        
