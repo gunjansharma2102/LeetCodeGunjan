@@ -1,0 +1,39 @@
+class Solution:
+    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+        
+        
+        def traverse(visited, src, des, hashMap):
+            visited.add(src)
+            for item, val in hashMap[src]:
+                if item==des:
+                    return val
+                if item not in visited:
+                    e=traverse(visited, item, des, hashMap)
+                    if e!='a':
+                        return val*e
+
+            visited.remove(src)
+            return 'a'
+                    
+            
+        
+        hashMap=defaultdict(list)
+        
+        for i in range(len(equations)):
+            hashMap[equations[i][0]].append((equations[i][1], values[i]))
+            hashMap[equations[i][1]].append((equations[i][0], 1/values[i]))
+        
+        output=[]
+        
+        for query in queries:
+            visited=set()
+            val=1
+            a=traverse(visited, query[0], query[1], hashMap)
+            if a=='a':
+                output.append(-1)
+            else:
+                output.append(a)
+                
+        return output
+        
+        
