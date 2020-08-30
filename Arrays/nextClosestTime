@@ -1,0 +1,18 @@
+class Solution:
+    def nextClosestTime(self, time: str) -> str:
+        hours, minutes=time.split(':')
+        nums=sorted(set(hours+minutes))
+        
+        allTwoDigitValues=[]
+        for i in range(len(nums)):
+            for j in range(len(nums)):
+                allTwoDigitValues.append(nums[i]+nums[j])
+        
+        i=allTwoDigitValues.index(minutes)
+        if i+1<len(allTwoDigitValues) and int(allTwoDigitValues[i+1])<60:
+            return hours+':'+allTwoDigitValues[i+1]
+        i=allTwoDigitValues.index(hours)
+        if i+1<len(allTwoDigitValues) and int(allTwoDigitValues[i+1])<24:
+            return allTwoDigitValues[i+1]+':'+allTwoDigitValues[0]
+        return allTwoDigitValues[0]+':'+allTwoDigitValues[0]
+        
