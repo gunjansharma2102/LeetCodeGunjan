@@ -1,3 +1,39 @@
+#With color coding
+
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        
+        def isCycle(color, i, adjacency):
+            if color[i]==2:
+                return True
+            if color[i]==1:
+                return False
+            color[i]=2
+            
+            for node in adjacency[i]:
+                if color[i]!=1 and isCycle(color, node, adjacency):
+                    return True
+            
+            color[i]=1
+            return False
+        
+        adjacency=defaultdict(list)
+        
+        color=[0]*numCourses
+        
+        for prerequisite in prerequisites:
+            adjacency[prerequisite[0]].append(prerequisite[1])
+        
+        for i in range(numCourses):
+            
+            if color[i]==0 and isCycle(color, i, adjacency):
+                return False
+        
+        return True
+
+
+#With indegree
+
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         inDegree=[0]*numCourses
