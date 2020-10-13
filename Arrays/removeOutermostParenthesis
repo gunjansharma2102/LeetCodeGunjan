@@ -1,0 +1,23 @@
+class Solution:
+    def removeOuterParentheses(self, S: str) -> str:
+        
+        answer=""
+        
+        if S=="":
+            return ""
+        
+        l=r=0
+        
+        j=1
+        
+        for i,char in enumerate(S):
+            
+            if char=="(":
+                l+=1
+            else:
+                r+=1
+                
+            if l==r and l!=0:
+                answer+=S[j:i]
+                j=i+2
+        return answer
